@@ -55,7 +55,7 @@ function findRoute(from,to){
 function findHotels(points){
 	console.log ("points "+points);
 	console.log ("l "+points.length);
-	for (var i =0; i< 20;i++){
+	for (var i =0; i< 1;i++){
 		console.log ("point "+points[i]);
 
 		var point = points[i];
@@ -93,23 +93,49 @@ function findHotel(long,lat){
 	//console.log ("php response "+response);
 	resp_object = JSON.parse(response);
 	//console.log(resp_object);
+	/*
+		address1: "Avenue Charles De Gaulle"
+		airportCode: "LIL"
+		amenityMask: 16777346
+		city: "Coquelles"
+		confidenceRating: 45
+		countryCode: "FR"
+		deepLink: "http://travel.ian.com/index.jsp?pageName=hotAvail&amp;cid=55505&amp;hotelID=110670&amp;mode=2&amp;numberOfRooms=1&amp;room-0-adult-total=2&amp;showInfo=true&amp;locale=en_US"
+		highRate: 227.0363
+		hotelId: 110670
+		hotelInDestination: true
+		hotelRating: 3
+		latitude: 50.92667
+		locationDescription: "In Coquelles"
+		longitude: 1.79683
+		lowRate: 142.7085
+		name: "Holiday Inn Calais-Coquelles"
+		postalCode: 62231
+		propertyCategory: 1
+		proximityDistance: 0.80060464
+		proximityUnit: "MI"
+		rateCurrencyCode: "USD"
+		shortDescription: "&lt;p&gt;&lt;b&gt;Location. &lt;/b&gt; &lt;br /&gt;Holiday Inn Calais-Coquelles is located in Coquelles, close to Calais Beach and Calais Hotel de Ville. Additional area points of interest include Musee des Beaux-Arts et de"
+		thumbNailUrl: "/hotels/1000000/890000/888900/888866/888866_117_t.jpg"
+		tripAdvisorRating: 3.5
+		*/
 //	alert(responseAjax);
 	
 	try{
-		for (var i=0; i<5;i++) {
-			hotel = resp_object.HotelListResponse.HotelList.HotelSummary[i];
-			var hotel_name = hotel.name;
-			var hotel_lat = hotel.latitude;
-			var hotel_lon = hotel.longitude;
+		for (var i=0; i<1;i++) {
+			var hotel = resp_object.HotelListResponse.HotelList.HotelSummary[i];
 			
-			console.log("hotel name "+hotel_name);
+			console.log("hotel name "+hotel.name);
 
-			var hotel;
-			printHotel(hotel_name,hotel_lat,hotel_lon);
+			//51
+			
+			/*printHotel(hotel.name,hotel.latitude,hotel.longitude, hotel.hotelRating,
+				"http://images.travelnow.com"+hotel.thumbNailUrl, desc+" [...]",
+			    hotel.deepLink,  hotel.lowRate,hotel.highRate, hotel.rateCurrencyCode
+			);*/
+			printHotel(hotel );
 		
 		}
-	
-		
 	} catch ( e) {
 			console.log ("No hotels near "+long+" "+lat);
 	}
@@ -117,11 +143,29 @@ function findHotel(long,lat){
 	
 }
 
-function printHotel(name,lat,lon){
+
+
+/*function printHotel(name,lat,lon,stars,photo_url,desc,link,price_low,price_high,currency){
 	
 	var icon = 'http://mapicons.nicolasmollet.com/wp-content/uploads/mapicons/shape-default/color-8c4eb8/shapecolor-white/shadow-1/border-color/symbolstyle-color/symbolshadowstyle-no/gradient-no/hotel_0star.png';
 	var myLatlng = new google.maps.LatLng(lat,lon);
-    setPoint(myLatlng, icon,  name, null);
+	var content = name+" "+stars+"*<br/>"+
+					"<img src='"+photo_url+"'/>"+desc+"<br/>"+
+					"<a href='"+link+"' target='_blank'>Link</a><br/>"+
+					"Price range: "+price_low+"-"+price_high+" "+currency+"<br/>"+
+					"<input type='button' value='Choose this' onclick='chooseHotel(\""+name+"\")'/>";
+					
+    setPoint(myLatlng, icon, content, null);
 
+}*/
+
+function printHotel(hotel){
+	var icon = 'http://mapicons.nicolasmollet.com/wp-content/uploads/mapicons/shape-default/color-8c4eb8/shapecolor-white/shadow-1/border-color/symbolstyle-color/symbolshadowstyle-no/gradient-no/hotel_0star.png';
+	var myLatlng = new google.maps.LatLng(hotel.latitude,hotel.longitude);
+	
+	var content = formatedHotel(hotel) + 
+		"<input type='button' value='Choose this' onclick='chooseHotel("+JSON.stringify(hotel)+")'/>";
+					
+    setPoint(myLatlng, icon, content, null);
 }
 

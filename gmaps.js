@@ -496,8 +496,8 @@ function setPuntosIntermedios(array){
 	return waypoints;
 }
 
-function setPoint (point,image,title,animation){
-	if (debug) alert('point image '+image+' title '+title+' animation '+animation);
+function setPoint (point,image,box,animation){
+	if (debug) alert('point image '+image+' box '+box+' animation '+animation);
 	var marker = new google.maps.Marker({
 		icon: image,
 		position: point,
@@ -505,7 +505,7 @@ function setPoint (point,image,title,animation){
 		animation: animation
 		
 	});
-	inicializarCajaTexto(marker,title );
+	createInfoWindow(marker,box );
 	
 }
 function setDirection(from,to,waypoints) {
@@ -578,13 +578,12 @@ function rgb2Color(r,g,b){
 }
 //caja de texto
 
-function inicializarCajaTexto(marker,texto ){
-
+function createInfoWindow(marker,box ){
 
 	var boxText = document.createElement("div");
-	boxText.style.cssText = "margin-top: 8px; background: #ffffff; padding: 5px";
-	boxText.innerHTML = texto;
-
+	boxText.style.cssText = "border: 1px solid; margin-top: 8px; background: #ffffff; padding: 5px";
+	boxText.innerHTML = box;
+	
 	var myOptions = {
 		content: boxText
 		,disableAutoPan: false

@@ -2,6 +2,7 @@
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
         <title></title>
+        <script type="text/javascript" src="functions.js"></script>
         <script type="text/javascript" src="gmaps.js"></script>
         <script type="text/javascript" src="expedia.js"></script>
 
@@ -15,11 +16,25 @@
 
     <body onload="loadScript();" >
 
-    <input type="text" value="51.519452,-0.127029" id="from"/>
-    <input type="text" value="36.738884,-4.438477" id="to"/>
+   
+    
+    <table>
+		<tr>
+			<td>
+				<input type="text" value="51.519452,-0.127029" id="from"/>
+				<input type="text" value="36.738884,-4.438477" id="to"/>
 
-    <input type="button" onclick="routeAction()"/>
-        <div id="mapa_ruta" style="width: 100%; height: 100%"></div>
-
+				<input type="button" onclick="routeAction()"/>
+			</td>
+			<td>
+				<div id="mapa_ruta" style="width: 400px; height: 400px"></div>
+			</td>
+			<td>
+			
+				<div id="selected_hotels" > Lista:</div>
+			</td>
+			
+		</tr>
+    </table>
     </body>
 </html> 
