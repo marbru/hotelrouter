@@ -52,7 +52,7 @@ function findRoute(from,to){
 		
 	
 }
-function findHotels(points){
+function findHotels(points,arrdate,dptdate,budget,people){
 	console.log ("points "+points);
 	console.log ("l "+points.length);
 	for (var i =0; i< 1;i++){
@@ -66,7 +66,7 @@ function findHotels(points){
 	//	console.log("Painting "+lon+" "+lat);
 		//setPoint(myLatlng, 'home.png',  " ", null);
 					
-		findHotel(lon,lat);
+		findHotel(lon,lat,arrdate,dptdate,budget,people);
 	}
 	
 }
@@ -82,10 +82,34 @@ function newAjax(url) {
 
     return hostipInfo;
 }
-function findHotel(long,lat){
+
+function findHotel(long,lat,arrdate,dptdate,budget,people){
 		
 	//var requestStr = "http://api.ean.com/ean-services/rs/hotel/v3/list?latitude="+lat+"&longitude="+long+"&searchRadius=1&apiKey=rjge84jyvpv8dgmw7pckam56";
-	requestStr = "./requestEAN.php?lat="+lat+"&lon="+long+"&rad=1";
+	
+	requestStr = "http://api.ean.com/ean-services/rs/hotel/v3/list?latitude=$lat&longitude=$lon&searchRadius=$rad&apiKey=rjge84jyvpv8dgmw7pckam56";
+	
+	
+	requestStr = "http://api.ean.com/ean-services/rs/hotel/v3/list?"+
+	    // user parameters
+		"latitude="+lat+
+		"&longitude="+lon+
+		"&arrivalDate="+arrdate+ //MM/DD/YYYY format
+		"&departureDate="+dptdate+
+		"&minRate=10"+
+		"&maxRate="+budget+
+		"&room1="+people+
+		// tuning parameters
+		"&searchRadius=1"+
+		"&sort=OVERALL_VALUE"+
+		"&includeDetails=true"+
+		"&options=ROOM_RATE_DETAILS"+
+		"&address=true"+
+		"&propertyCategory=6"+ //all inclusive
+		"&numberOfResults=3"+
+		"&apkiKey=rjge84jyvpv8dgmw7pckam56";
+	
+	//requestStr = "./requestEAN.php?lat="+lat+"&lon="+long+"&rad=1";
 	//console.log("requests "+requestStr);
 	//var response = newAjax(requestStr);
 	//restrequest(requestStr);
@@ -127,12 +151,6 @@ function findHotel(long,lat){
 			
 			console.log("hotel name "+hotel.name);
 
-			//51
-			
-			/*printHotel(hotel.name,hotel.latitude,hotel.longitude, hotel.hotelRating,
-				"http://images.travelnow.com"+hotel.thumbNailUrl, desc+" [...]",
-			    hotel.deepLink,  hotel.lowRate,hotel.highRate, hotel.rateCurrencyCode
-			);*/
 			printHotel(hotel );
 		
 		}

@@ -5,6 +5,7 @@
         <script type="text/javascript" src="functions.js"></script>
         <script type="text/javascript" src="gmaps.js"></script>
         <script type="text/javascript" src="expedia.js"></script>
+	<link href="style.css" rel="stylesheet" type="text/css" />
 
         <!--GOOGLE STUFF
         <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
@@ -16,25 +17,29 @@
 
     <body onload="loadScript();" >
 
-   
-    
-    <table>
-		<tr>
-			<td>
-				<input type="text" value="51.519452,-0.127029" id="from"/>
-				<input type="text" value="36.738884,-4.438477" id="to"/>
+   	<div class="divMain">
 
-				<input type="button" onclick="routeAction()"/>
-			</td>
-			<td>
-				<div id="mapa_ruta" style="width: 400px; height: 400px"></div>
-			</td>
-			<td>
-			
-				<div id="selected_hotels" > Lista:</div>
-			</td>
-			
-		</tr>
-    </table>
+    
+		<table>
+			<tr>
+				<td class="leftColumn alignTop">
+					from: <input type="text" value="51.519452,-0.127029" id="from"/>
+					to: <input type="text" value="36.738884,-4.438477" id="to"/>
+					date: <input type="text" value="30/04/2013" id="date"/>
+					daily budget: <input type="text" value="100" id="budget"/>
+
+					<input type="button" value="Search" onclick="routeAction()"/>
+				</td>
+				<td class="middleColumn">
+					<div id="mapa_ruta" style="width: 100%; height:100%"></div>
+				</td>
+				<td class="rightColumn alignTop">
+				
+					<div id="selected_hotels" > Lista:</div>
+				</td>
+				
+			</tr>
+		</table>
+    </div>
     </body>
 </html> 
