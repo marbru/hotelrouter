@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+        <title></title>
+        <script type="text/javascript" src="gmaps.js"></script>
+        <script type="text/javascript" src="expedia.js"></script>
+
+        <!--GOOGLE STUFF
+        <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCftxbEPwtzi8AMzTNQZYfxfZjHzJgtY5s&sensor=false"></script>
+        <script type="text/javascript" src="gears_init.js"></script>-->
+        
+        
+    </head>
+
+    <body onload="loadScript();" >
+
+    <input type="text" value="51.519452,-0.127029" id="from"/>
+    <input type="text" value="36.738884,-4.438477" id="to"/>
+
+    <input type="button" onclick="routeAction()"/>
+        <div id="mapa_ruta" style="width: 100%; height: 100%"></div>
+
+    </body>
+</html> 
