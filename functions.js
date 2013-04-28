@@ -35,8 +35,8 @@ function findRoute(from,to){
 	//var responseAjax = ajax("http://maps.googleapis.com/maps/api/directions/json?origin="+from+"&destination="+to+"&sensor=false");
 	
 		//var responseAPI = google.maps.directionsRequest("origin:"+from,"destination:"+to);	
-	var fromIcon = "http://mapicons.nicolasmollet.com/wp-content/uploads/mapicons/shape-default/color-f70303/shapecolor-light/shadow-1/border-white/symbolstyle-dark/symbolshadowstyle-no/gradient-no/letter_a.png";
-	var toIcon = "http://mapicons.nicolasmollet.com/wp-content/uploads/mapicons/shape-default/color-f70303/shapecolor-light/shadow-1/border-white/symbolstyle-dark/symbolshadowstyle-no/gradient-no/letter_b.png";
+	//var fromIcon = "http://mapicons.nicolasmollet.com/wp-content/uploads/mapicons/shape-default/color-f70303/shapecolor-light/shadow-1/border-white/symbolstyle-dark/symbolshadowstyle-no/gradient-no/letter_a.png";
+	//var toIcon = "http://mapicons.nicolasmollet.com/wp-content/uploads/mapicons/shape-default/color-f70303/shapecolor-light/shadow-1/border-white/symbolstyle-dark/symbolshadowstyle-no/gradient-no/letter_b.png";
 	
 	
 	/*var myLatlng = new google.maps.LatLng(hotel.latitude,hotel.longitude);
@@ -46,7 +46,6 @@ function findRoute(from,to){
 	setPoint(to, toIcon, content, null);
 */
 	 directionAPI(from,to);
-	 setDirection(from,to,null);
 
 }
 function routeInit(){

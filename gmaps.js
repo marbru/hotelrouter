@@ -64,14 +64,24 @@ function initialize(){
 		// alert('latLng '+event.latLng);
 		//placeMarker(event.latLng);
 		//alert("left");
-		document.getElementById("from").value=event.latLng;
+		var to = document.getElementById("to").value;
+		var from = event.latLng;
+		if (to != ''){
+			setDirection(from,to,null);
+		}
+		document.getElementById("from").value=from;
 	});
 	google.maps.event.addListener(map, "rightclick", function(event) {
 		// alert('click');
 		//alert('latLng '+event.latLng);
 		//placeMarker(event.latLng);
 		//alert("right");
-		document.getElementById("to").value=event.latLng;
+		var from = document.getElementById("from").value;
+		var to = event.latLng;
+		if (to != ''){
+			setDirection(from,to,null);
+		}
+		document.getElementById("to").value=to;
 
 	});
 }

@@ -14,18 +14,20 @@
     <div class="loadingDiv" id="loadingDiv">
 		<img class="loadingGif" src="images/loading3.gif"/>
     </div>
+    <div class="title" >
+		<h1>Hotel router</h1>
+	</div>
    	<div class="divMain">
-
 		<table>
 			<tr>
 				<td class="leftColumn alignTop">
 					<h1>Search</h1>
 					From <br/>
-					<input type="text" value="51.519452,-0.127029" id="from"/>
+					<input type="text" value="" id="from"/>
 					<img class='icon' src='images/mouse_left.png'>
 					<br/>
 					To <br/>
-					<input type="text" value="51.619452,-0.127029" id="to"/>
+					<input type="text" value="" id="to"/>
 					<img class='icon' src='images/mouse_right.png'>
 					<br/>
 					date: <br/>
@@ -34,7 +36,7 @@
 					how many people?: <br/>
 					<input type="text" value="2" style="width:50px" id="people"/><br/>
 					Radious <br/>
-					<input type="text" value="5" style="width:50px" id="radious"/> MI<br/> 
+					<input type="text" value="1" style="width:50px" id="radious"/> MI<br/> 
 					Daily budget (per hotel) <br/>
 					<input type="text" value="100" style="width:50px" id="budget"/> USD<br/>
 					<input type="button" value="Search" onclick="clearOverlays();routeAction();"/>

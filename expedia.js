@@ -7,11 +7,14 @@ function findHotels(points){
 	var radious = document.getElementById("radious").value;
 
 	console.log ("points "+points);
+	
+	document.getElementById("searchResults").innerHTML = points.length + " points returned by Google</br>";
 	//alert("l "+points.length);
 	var hotelsFound = parseInt(0);
 	var processedPoints = 0;
 	var previousLat = 0;
 	var previousLon = 0;
+	
 	for (var i =0; i<points.length;i++){
 		try{
 			var point = points[i];
@@ -20,7 +23,9 @@ function findHotels(points){
 			
 			var dist =calcDist(previousLon,previousLat,lon,lat);
 			console.log("new point "+points[i]+" :dist from previous "+dist);
-			if (dist > radious){
+			
+			pointsMod = Math.round(points.length / 100);
+			if (dist>radious*2){
 				processedPoints++;
 				previousLon = lon;
 				previousLat = lat;
@@ -41,6 +46,7 @@ function findHotels(points){
 				hotelsFound += parseInt(findHotel(lon,lat,arrdate,dptdate,budget,people,radious));
 				
 			}
+			
 		} catch (e){
 			console.log("error processing point: "+e);
 		}
@@ -50,7 +56,8 @@ function findHotels(points){
 		//setPoint(myLatlng, 'home.png',  " ", null);
 	}
 	
-	document.getElementById("searchResults").innerHTML = hotelsFound+ " hotel(s) found";
+	document.getElementById("searchResults").innerHTML += processedPoints + " requests made to expedia </br>";
+	document.getElementById("searchResults").innerHTML += hotelsFound+ " hotel(s) found </br>";
 
 	//alert("processed points: "+processedPoints);
 }
@@ -162,7 +169,8 @@ function findHotel(lon,lat,arrdate,dptdate,budget,people,radious){
 }*/
 
 function printHotel(hotel){
-	var icon = 'http://mapicons.nicolasmollet.com/wp-content/uploads/mapicons/shape-default/color-8c4eb8/shapecolor-white/shadow-1/border-color/symbolstyle-color/symbolshadowstyle-no/gradient-no/hotel_0star.png';
+	//var icon = 'http://mapicons.nicolasmollet.com/wp-content/uploads/mapicons/shape-default/color-8c4eb8/shapecolor-white/shadow-1/border-color/symbolstyle-color/symbolshadowstyle-no/gradient-no/hotel_0star.png';
+	var icon = "images/hotel.png";
 	var myLatlng = new google.maps.LatLng(hotel.latitude,hotel.longitude);
 	
 	var content = formatedHotel(hotel) + 

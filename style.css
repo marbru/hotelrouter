@@ -55,13 +55,21 @@ h1{
 	height:605px;
     margin-left: auto ;
     margin-right: auto;
-    margin-top: 50px;
-    margin-bottom: 10px;
     border-radius: 10px 10px 10px 10px;
     box-shadow: 5px 5px 10px black;
-
 }
-
+.title{
+	background-color: #FFFFFF;
+    width:1190px ;
+    margin-left: auto ;
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 5px 5px 10px black;
+	padding:5px;
+	text-align:center;
+}
 .tableMain{
 	width:100%;
 	height:100%;
