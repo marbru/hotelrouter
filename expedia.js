@@ -61,32 +61,44 @@ function findHotels(points){
 	var people = document.getElementById("people").value;
 	
 	console.log ("points "+points);
-	console.log ("l "+points.length);
-	for (var i =0; i< 1;i++){
-		console.log ("point "+points[i]);
-
-		var point = points[i];
-		var lat = point.jb;
-		var lon = point.kb;
+	alert("l "+points.length);
+	var j = 0;
+	for (var i =0; i<points.length;i++){
+		try{
+			console.log ("point "+points[i]);
+			if (i%3 == 0){
+				j = j+1;
+				var point = points[i];
+				var lat = point.jb;
+				var lon = point.kb;
+				
+				var dateobj = new Date();
+				var dateparts = date.split("/"); //MM/DD/YYYY format
+				dateobj.setFullYear(dateparts[2], dateparts[0], dateparts[1]);
+				var nextdate =new Date(dateobj.getTime()+(24 * 60 * 60 *1000));
+				
+				//alert("date: "+dateobj+"---next: "+nextdate);
+				
+				arrdate = date
+				dptdate = ("0" + (nextdate.getMonth() )).slice(-2)+"/"+
+						("0" + nextdate.getDate()).slice(-2)+"/"+
+						nextdate.getFullYear();
+				//alert("date: "+date+"---next: "+dptdate);
+				findHotel(lon,lat,arrdate,dptdate,budget,people);
+				
+			}
+		} catch (e){
+			console.log("error processing point: "+points[i]);
+		}
 		
-		var dateobj = new Date();
-		var dateparts = date.split("/"); //MM/DD/YYYY format
-		dateobj.setFullYear(dateparts[2], dateparts[0], dateparts[1]);
-		var nextdate =new Date();
-		nextdate.setDate(dateobj.getDate()+1);
-		
-		arrdate = date
-		dptdate = ("0" + (nextdate.getMonth() + 1)).slice(-2)+"/"+
-				("0" + nextdate.getDate()).slice(-2)+"/"+
-				nextdate.getFullYear();
-
 		//var myLatlng = new google.maps.LatLng(lat,lon);
 	//	console.log("Painting "+lon+" "+lat);
 		//setPoint(myLatlng, 'home.png',  " ", null);
 					
-		findHotel(lon,lat,arrdate,dptdate,budget,people);
+		
+		
 	}
-	
+	alert("processed points: "+j);
 }
 
 function newAjax(url) {
@@ -153,7 +165,7 @@ function findHotel(lon,lat,arrdate,dptdate,budget,people){
 		*/
 //	alert(responseAjax);
 
-	alert(resp_object.HotelListResponse.HotelList["@size"]);
+	console.log("number of hotels found: "+resp_object.HotelListResponse.HotelList["@size"]);
 
 	if (resp_object.HotelListResponse.HotelList["@size"]==1){
 		var hotel = resp_object.HotelListResponse.HotelList.HotelSummary;
@@ -161,7 +173,7 @@ function findHotel(lon,lat,arrdate,dptdate,budget,people){
 		console.log("hotel name "+hotel.name);
 
 		printHotel(hotel);
-	} else if (resp_object.HotelListResponse.HotelList.size>1) {
+	} else if (resp_object.HotelListResponse.HotelList["@size"]>1) {
 		for (var i=0; i<1;i++) {
 			var hotel = resp_object.HotelListResponse.HotelList.HotelSummary[i];
 			

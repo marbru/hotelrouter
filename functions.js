@@ -46,12 +46,36 @@ function formatedHotel(hotel){
 	var str =  hotel.name+" "+hotel.hotelRating+"*<br/>"+
 		"<img src='http://images.travelnow.com"+hotel.thumbNailUrl+"'/>"+desc+"<br/>"+
 		"<a href='"+hotel.deepLink+"' target='_blank'>Link</a><br/>"+
-		"Price range: "+hotel.lowRate+"-"+hotel.highRate+" "+hotel.rateCurrencyCode+"<br/>"		;
+		"Price range: "+hotel.lowRate+"-"+hotel.highRate+hotel.rateCurrencyCode+"<br/>";/*+
+		"Rooms: <br/>";
+		
+	var rooms = hotel.RoomRateDetailsList;
+	var roomsformated = "";
+	if(rooms.length >1){
+		for (var i=0; i<rooms.length; i++){
+			roomsformated = roomsformated+ "\t"+ formatedRoom(rooms[i].RoomRateDetails)+"<br/>";
+		}
+	} else { //is 1
+		roomsformated  = roomsformated+ "\t"+ formatedRoom(rooms.RoomRateDetails)+"<br/>";
+	}*/
 					
 	return str;
-					
+}
+
+
+
+
+function formatedRoom(room, hotelid){
+	var result = room.roomDescription+" ("+room.currentAllotment+" left) - "+
+				room.RateInfo.ChargeableRateInfo["@total"]+room.RateInfo.ChargeableRateInfo["currencyCode"];
+	//result += "<input type='button' value='Book this room' onclick='bookRoom("+hotelid+","+room.roomTypeCode+")'/>"
+	return result;
+}
+
+function bookRoom(hotelid, roomid){
 	
 }
+
 function printSelectedHotels(){
 	
 	var content = "";
