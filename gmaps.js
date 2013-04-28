@@ -57,6 +57,23 @@ function initialize(){
   //var center = new google.maps.LatLng(36.7236,-4.3937);
    directionsService = new google.maps.DirectionsService();
    map = new google.maps.Map(document.getElementById("mapa_ruta"), mapOptions);
+   
+    directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
+   google.maps.event.addListener(map, "click", function(event) {
+		// alert('click');
+		// alert('latLng '+event.latLng);
+		//placeMarker(event.latLng);
+		//alert("left");
+		document.getElementById("from").value=event.latLng;
+	});
+	google.maps.event.addListener(map, "rightclick", function(event) {
+		// alert('click');
+		//alert('latLng '+event.latLng);
+		//placeMarker(event.latLng);
+		//alert("right");
+		document.getElementById("to").value=event.latLng;
+
+	});
 }
 function loadScript() {
 	
@@ -187,7 +204,7 @@ function realizarAccion(){
 			// alert('click');
 			// alert('latLng '+event.latLng);
 			//placeMarker(event.latLng);
-			dibujarPoligono(event);
+			alert("blah");
 		});
 		google.maps.event.addListener(map, "dblclick", function() {
 			// alert('click');
@@ -496,6 +513,14 @@ function setPuntosIntermedios(array){
 	return waypoints;
 }
 
+ markersArray = [];
+ 
+function clearOverlays() {
+  for (var i = 0; i < markersArray.length; i++ ) {
+    markersArray[i].setMap(null);
+  }
+}
+
 function setPoint (point,image,box,animation){
 	if (debug) alert('point image '+image+' box '+box+' animation '+animation);
 	var marker = new google.maps.Marker({
@@ -503,14 +528,15 @@ function setPoint (point,image,box,animation){
 		position: point,
 		map: map,
 		animation: animation
-		
 	});
-	createInfoWindow(marker,box );
 	
+	markersArray.push(marker);
+	createInfoWindow(marker,box );
 }
+
+var directionsDisplay
 function setDirection(from,to,waypoints) {
 
-	var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
 	directionsDisplay.setMap(map);
 
 	var request = {
@@ -581,12 +607,12 @@ function rgb2Color(r,g,b){
 function createInfoWindow(marker,box ){
 
 	var boxText = document.createElement("div");
-	boxText.style.cssText = "border: 1px solid; margin-top: 8px; background: #ffffff; padding: 5px";
+	boxText.setAttribute("class", "infoWindow");//.cssText = "";
 	boxText.innerHTML = box;
 	
 	var myOptions = {
 		content: boxText
-		,disableAutoPan: false
+	/*	,disableAutoPan: false
 		,maxWidth: 0
 		,zIndex: null
 		,boxStyle: {
@@ -594,12 +620,12 @@ function createInfoWindow(marker,box ){
 			opacity: 0.75
 			,width: "280px"
 		}
-		,closeBoxMargin: "10px 2px 2px 2px"
-		,closeBoxURL: "close.png"
-		,infoBoxClearance: new google.maps.Size(1, 1)
-		,isHidden: false
+		//,closeBoxMargin: "10px 2px 2px 2px"
+		//,closeBoxURL: "close.png"
+		//,infoBoxClearance: new google.maps.Size(1, 1)
+		//,isHidden: false
 		,pane: "floatPane"
-		,enableEventPropagation: false
+		,enableEventPropagation: false*/
 	};
 
 	google.maps.event.addListener(marker, "click", function (e) {

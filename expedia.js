@@ -1,76 +1,29 @@
-function routeAction(){
-	var from = document.getElementById("from").value;
-	var to = document.getElementById("to").value;
-	
-	findRoute(from, to);
-	
-}
 
-function ajax(url) {
-	if (window.XMLHttpRequest) {
-		AJAX=new XMLHttpRequest();
-	} else {
-		AJAX=new ActiveXObject("Microsoft.XMLHTTP");
-	}
-	if (AJAX) {
-
-		AJAX.open("GET", url, false);
-		//AJAX.setRequestHeader("Origin", "*");
-		//AJAX.setRequestHeader("Access-Control-Request-Origin", "*");
-		AJAX.send(null);
-		return AJAX.responseText;
-	} else {
-		return false;
-	} 
-}
-
-function restrequest(url){
-    $.get(url,
-       function(data){
-		   alert(data.reponse)
-        }, "json"
-       );
-}
-
-
-
-function findRoute(from,to){
-	//get all points	
-	//var responseAjax = ajax("http://maps.googleapis.com/maps/api/directions/json?origin="+from+"&destination="+to+"&sensor=false");
-	
-		//var responseAPI = google.maps.directionsRequest("origin:"+from,"destination:"+to);	
-
-	 directionAPI(from,to);
-
-	 
-	  setDirection(from,to,null);
-
-	//alert("response "+responseAPI);
-
-	//getjson
-	//http://maps.googleapis.com/maps/api/directions/json?origin=51.563412,-0.065918&destination=36.738884,-4.438477&sensor=false
-	
-	//for points
-		
-	
-}
 function findHotels(points){
 	
 	var date = document.getElementById("date").value;
 	var budget = document.getElementById("budget").value;
 	var people = document.getElementById("people").value;
-	
+	var radious = document.getElementById("radious").value;
+
 	console.log ("points "+points);
-	alert("l "+points.length);
-	var j = 0;
+	//alert("l "+points.length);
+	var hotelsFound = parseInt(0);
+	var processedPoints = 0;
+	var previousLat = 0;
+	var previousLon = 0;
 	for (var i =0; i<points.length;i++){
 		try{
-			console.log ("point "+points[i]);
-			if (i%3 == 0){
-				j = j+1;
-				var point = points[i];
-				var lat = point.jb;
-				var lon = point.kb;
+			var point = points[i];
+			var lat = point.jb;
+			var lon = point.kb;
+			
+			var dist =calcDist(previousLon,previousLat,lon,lat);
+			console.log("new point "+points[i]+" :dist from previous "+dist);
+			if (dist > radious){
+				processedPoints++;
+				previousLon = lon;
+				previousLat = lat;
 				
 				var dateobj = new Date();
 				var dateparts = date.split("/"); //MM/DD/YYYY format
@@ -84,21 +37,22 @@ function findHotels(points){
 						("0" + nextdate.getDate()).slice(-2)+"/"+
 						nextdate.getFullYear();
 				//alert("date: "+date+"---next: "+dptdate);
-				findHotel(lon,lat,arrdate,dptdate,budget,people);
+				
+				hotelsFound += parseInt(findHotel(lon,lat,arrdate,dptdate,budget,people,radious));
 				
 			}
 		} catch (e){
-			console.log("error processing point: "+points[i]);
+			console.log("error processing point: "+e);
 		}
 		
 		//var myLatlng = new google.maps.LatLng(lat,lon);
 	//	console.log("Painting "+lon+" "+lat);
 		//setPoint(myLatlng, 'home.png',  " ", null);
-					
-		
-		
 	}
-	alert("processed points: "+j);
+	
+	document.getElementById("searchResults").innerHTML = hotelsFound+ " hotel(s) found";
+
+	//alert("processed points: "+processedPoints);
 }
 
 function newAjax(url) {
@@ -113,7 +67,7 @@ function newAjax(url) {
     return hostipInfo;
 }
 
-function findHotel(lon,lat,arrdate,dptdate,budget,people){
+function findHotel(lon,lat,arrdate,dptdate,budget,people,radious){
 		
 	//var requestStr = "http://api.ean.com/ean-services/rs/hotel/v3/list?latitude="+lat+"&longitude="+long+"&searchRadius=1&apiKey=rjge84jyvpv8dgmw7pckam56";
 	
@@ -127,7 +81,8 @@ function findHotel(lon,lat,arrdate,dptdate,budget,people){
 		"&arrivalDate="+arrdate+ //MM/DD/YYYY format
 		"&departureDate="+dptdate+
 		"&maxRate="+budget+
-		"&room1="+people;
+		"&room1="+people+
+		"&radious="+radious;
 
 	requestStr = "./requestEAN.php?"+query;
 	console.log("requests "+requestStr);
@@ -165,31 +120,32 @@ function findHotel(lon,lat,arrdate,dptdate,budget,people){
 		*/
 //	alert(responseAjax);
 
-	console.log("number of hotels found: "+resp_object.HotelListResponse.HotelList["@size"]);
-
-	if (resp_object.HotelListResponse.HotelList["@size"]==1){
-		var hotel = resp_object.HotelListResponse.HotelList.HotelSummary;
+	try{
 		
+		var hotels = parseInt(resp_object.HotelListResponse.HotelList["@size"] );
+		console.log("number of hotels found: "+hotels);
+	} catch (e){
+		console.log ("invalid hotels number "+e);
+		var hotels = 0;
+	}	
+
+	if (hotels==1){
+		var hotel = resp_object.HotelListResponse.HotelList.HotelSummary;
 		console.log("hotel name "+hotel.name);
 
 		printHotel(hotel);
-	} else if (resp_object.HotelListResponse.HotelList["@size"]>1) {
-		for (var i=0; i<1;i++) {
+	} else if (hotels>1) {
+		for (var i=0; i<hotels;i++) {
 			var hotel = resp_object.HotelListResponse.HotelList.HotelSummary[i];
-			
 			console.log("hotel name "+hotel.name);
-
 			printHotel(hotel);
 		}
 	} else {
 		console.log ("No hotels near "+lon+" "+lat);
 	}
-
 	
-	
+	return hotels;
 }
-
-
 
 /*function printHotel(name,lat,lon,stars,photo_url,desc,link,price_low,price_high,currency){
 	

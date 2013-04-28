@@ -5,43 +5,48 @@
         <script type="text/javascript" src="functions.js"></script>
         <script type="text/javascript" src="gmaps.js"></script>
         <script type="text/javascript" src="expedia.js"></script>
-	<link href="style.css" rel="stylesheet" type="text/css" />
+		<link href="style.css" rel="stylesheet" type="text/css" />
 
-        <!--GOOGLE STUFF
-        <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCftxbEPwtzi8AMzTNQZYfxfZjHzJgtY5s&sensor=false"></script>
-        <script type="text/javascript" src="gears_init.js"></script>-->
-        
-        
     </head>
 
     <body onload="loadScript();" >
 
+    <div class="loadingDiv" id="loadingDiv">
+		<img class="loadingGif" src="images/loading3.gif"/>
+    </div>
    	<div class="divMain">
 
-    
 		<table>
 			<tr>
 				<td class="leftColumn alignTop">
-					from: <br/>
-					<input type="text" value="51.519452,-0.127029" id="from"/><br/>
-					to: <br/>
-					<input type="text" value="36.738884,-4.438477" id="to"/><br/>
+					<h1>Search</h1>
+					From <br/>
+					<input type="text" value="51.519452,-0.127029" id="from"/>
+					<img class='icon' src='images/mouse_left.png'>
+					<br/>
+					To <br/>
+					<input type="text" value="51.619452,-0.127029" id="to"/>
+					<img class='icon' src='images/mouse_right.png'>
+					<br/>
 					date: <br/>
 					<input type="text" value="04/30/2013" id="date"/><br/>
+					
 					how many people?: <br/>
-					<input type="text" value="2" id="people"/><br/>
-					daily budget: <br/>
-					<input type="text" value="100" id="budget"/><br/>
-
-					<input type="button" value="Search" onclick="routeAction()"/>
+					<input type="text" value="2" style="width:50px" id="people"/><br/>
+					Radious <br/>
+					<input type="text" value="5" style="width:50px" id="radious"/> MI<br/> 
+					Daily budget (per hotel) <br/>
+					<input type="text" value="100" style="width:50px" id="budget"/> USD<br/>
+					<input type="button" value="Search" onclick="clearOverlays();routeAction();"/>
+					
+					<div id="searchResults"> </div>
 				</td>
 				<td class="middleColumn">
 					<div id="mapa_ruta" style="width: 100%; height:100%"></div>
 				</td>
 				<td class="rightColumn alignTop">
-				
-					<div id="selected_hotels" > Lista:</div>
+					<div id="selected_hotels" class="listSelected" > 
+					</div>
 				</td>
 				
 			</tr>

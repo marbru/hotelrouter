@@ -11,6 +11,7 @@ $arrdate = $_GET["arrivalDate"];
 $dptdate = $_GET["departureDate"];
 $budget = $_GET["maxRate"];
 $people = $_GET["room1"];
+$radious = $_GET["radious"];
 
 
 //echo "lat: $lat lon $lon";
@@ -23,14 +24,14 @@ $url = "http://api.ean.com/ean-services/rs/hotel/v3/list?".
 "&maxRate=$budget".
 "&room1=$people".
 // tuning parameters
-"&searchRadius=1".
+"&searchRadius=$radious".
 "&sort=OVERALL_VALUE".
 "&includeDetails=true".
 //"&options=ROOM_RATE_DETAILS". 
 "&address=true".
 "&propertyCategory=6". //all inclusive
-"&numberOfResults=3".
-"&apiKey=rjge84jyvpv8dgmw7pckam56";
+"&numberOfResults=5".
+"&apiKey=66rqbka7j8xrhqmb6mc2c95c";
 
 
 //javi key: rjge84jyvpv8dgmw7pckam56
